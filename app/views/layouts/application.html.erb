@@ -5,10 +5,15 @@
   <%= stylesheet_link_tag    "application", media: "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+  <%= render 'layouts/ie-shim' %>
 </head>
 <body>
+  <%= render 'layouts/header' %>
+  <div class='container'>
+    <%= yield %>
+    <%= render 'layouts/footer' %>
+  </div>
 
-<%= yield %>
-
+  <!-- Scripts after this line -->
 </body>
 </html>
