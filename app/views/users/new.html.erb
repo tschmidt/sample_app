@@ -7,8 +7,8 @@
       <%= form.input :name %>
       <%= form.input :email %>
       <%= form.input :password %>
-      <%= form.input :password_confirmation, label: "Confirmation" %>
-      <%= form.button :wrapped, cancel: root_path, value: "Create my account" %>
+      <%= form.input :password_confirmation %>
+      <%= form.button :wrapped, cancel: root_path, value: t('forms.users.buttons.sign_up') %>
     <%- end -%>
   </div>
 </div>

@@ -1,0 +1,31 @@
+# Sample localization file for Spanish. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+es:
+  hello: "Hola, Mundo!"
+  forms:
+    users:
+      buttons:
+        sign_up: "Crear mi cuenta"
+  activerecord:
+    attributes:
+      user:
+        name: "Nombre"
+        email: "Email"
+        password: "Contraseña"
+        password_confirmation: "Confirmación"
+        password_digest: "Contraseña"
+    errors:
+      models:
+        user:
+          attributes:
+            name:
+              blank: "no puede estar en blanco"
+            email:
+              blank: "no puede estar en blanco"
+            password:
+              blank: "no puede estar en blanco"
+              too_short: "es demasiado corto (mínima es de %{count} caracteres)"
+              confirmation: "no coincide con la confirmación"
+            password_confirmation:
+              blank: "no puede estar en blanco"

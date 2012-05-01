@@ -3,3 +3,23 @@
 
 en:
   hello: "Hello world"
+  forms:
+    users:
+      buttons:
+        sign_up: "Create my account"
+  activerecord:
+    attributes:
+      user:
+        name: "Name"
+        email: "Email"
+        password: "Password"
+        password_confirmation: "Confirmation"
+        password_digest: "Password"
+    errors:
+      models:
+        user:
+          attributes:
+            name:
+              blank: "can't be blank"
+            email:
+              blank: "can't be blank"
