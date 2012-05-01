@@ -1,3 +1,14 @@
 <%- provide :title, 'Sign up' -%>
 <h1>Sign up</h1>
-<p>Find me in app/views/users/new.html.erb</p>
+
+<div class='row'>
+  <div class='span6 offset3'>
+    <%= simple_form_for(@user, :html => {:class => 'form-horizontal' }) do |form| %>
+      <%= form.input :name %>
+      <%= form.input :email %>
+      <%= form.input :password %>
+      <%= form.input :password_confirmation, label: "Confirmation" %>
+      <%= form.button :wrapped, cancel: root_path, value: "Create my account" %>
+    <%- end -%>
+  </div>
+</div>

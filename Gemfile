@@ -6,6 +6,11 @@ gem 'jquery-rails', '2.0.0'
 gem 'pg', '0.12.2'
 gem 'bootstrap-sass', '2.0.0'
 gem 'bcrypt-ruby', '3.0.1'
+gem 'simple_form'
+
+group :development, :test do
+  gem 'factory_girl_rails', '1.4.0'
+end
 
 group :development do
   gem 'rspec-rails', '2.9.0'
