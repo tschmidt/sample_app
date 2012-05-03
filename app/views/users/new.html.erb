@@ -1,5 +1,5 @@
-<%- provide :title, 'Sign up' -%>
-<h1>Sign up</h1>
+<%- provide :title, t('forms.users.new.title') -%>
+<h1><%= t('forms.users.new.title') %></h1>
 
 <div class='row'>
   <div class='span6 offset3'>
@@ -8,7 +8,7 @@
       <%= form.input :email %>
       <%= form.input :password %>
       <%= form.input :password_confirmation %>
-      <%= form.button :wrapped, cancel: root_path, value: t('forms.users.buttons.sign_up') %>
+      <%= form.button :wrapped, cancel: root_path, value: t('forms.users.new.button') %>
     <%- end -%>
   </div>
 </div>

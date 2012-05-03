@@ -5,8 +5,13 @@ en:
   hello: "Hello world"
   forms:
     users:
-      buttons:
-        sign_up: "Create my account"
+      new:
+        title: "Sign up"
+        button: "Create my account"
+    sessions:
+      new:
+        title: "Sign in"
+        button: "Sign in"
   activerecord:
     attributes:
       user:

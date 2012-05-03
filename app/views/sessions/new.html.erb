@@ -1,0 +1,16 @@
+<% provide :title, t('forms.sessions.new.title') %>
+<h1><%= t 'forms.sessions.new.title' %></h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= simple_form_for :session, url: sessions_path do |form| %>
+      <%= form.input :email %>
+      <%= form.input :password %>
+      <%= form.button :wrapped, cancel: root_path, value: t('forms.sessions.new.button') %>
+    <%- end -%>
+    
+    <p>
+      New user? <%= link_to "Sign up now!", signup_path %>
+    </p>
+  </div>
+</div>

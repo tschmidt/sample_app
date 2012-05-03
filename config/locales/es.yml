@@ -4,9 +4,14 @@
 es:
   hello: "Hola, Mundo!"
   forms:
-    users:
-      buttons:
-        sign_up: "Crear mi cuenta"
+    users:      
+      new:
+        title: "Inscribirse"
+        button: "Crear mi cuenta"
+    sessions:
+      new:
+        title: "Registrarse"
+        button: "Registrarse"
   activerecord:
     attributes:
       user:

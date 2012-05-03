@@ -193,6 +193,7 @@ DEPENDENCIES
   heroku
   jquery-rails (= 2.0.0)
   json
+  launchy
   pg (= 0.12.2)
   pry-rails
   rails (= 3.2.3)
