@@ -6,8 +6,8 @@ describe "Authentication" do
   describe "signin page" do
     before { visit signin_path }
     
-    it { should have_selector('h1', text: 'Sign in') }
-    it { should have_selector('title', text: 'Sign in') }
+    it { should have_main_heading('Sign in') }
+    it { should have_page_title('Sign in') }
   end
   
   describe "signin" do
@@ -16,7 +16,7 @@ describe "Authentication" do
     describe "with invalid information" do
       before { click_button "Sign in" }
       
-      it { should have_selector('title', text: 'Sign in') }
+      it { should have_page_title('Sign in') }
       it { should have_error_message }
       
       describe "after visiting another page" do
@@ -29,15 +29,14 @@ describe "Authentication" do
       let(:user) { FactoryGirl.create(:user) }
       
       before do
-        fill_in "Email",    with: user.email
-        fill_in "Password", with: user.password
+        fill_out_sign_in_form(user)
         click_button "Sign in"
       end
       
-      it { should have_selector('title', text: user.name) }
-      it { should have_selector('a', text: "Profile", href: user_path(user)) }
-      it { should have_selector('a', href: signout_path) }
-      it { should_not have_selector('a', text: 'Sign in', href: signin_path) }
+      it { should have_page_title(user.name) }
+      it { should have_page_link(text: "Profile", href: user_path(user)) }
+      it { should have_page_link(text: "Sign out", href: signout_path) }
+      it { should_not have_page_link(text: 'Sign in', href: signin_path) }
       
       describe "followed by signout" do
         before { click_link("Sign out") }

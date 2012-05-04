@@ -1,7 +1,8 @@
-include ApplicationHelper
+require_relative 'utilities/alerts'
+require_relative 'utilities/html_elements'
+require_relative 'utilities/forms/sessions'
 
-RSpec::Matchers.define :have_error_message do |message|
-  match do |page|
-    page.should have_selector('div.alert.alert-error', text: message || '')
-  end
-end
+include ApplicationHelper
+include Utilities::Alerts
+include Utilities::HTMLElements
+include Utilities::Forms::Sessions
