@@ -14,6 +14,13 @@ module Utilities
         fill_in "Password", with: user.password
       end
       
+      def sign_in(user)
+        visit signin_path
+        fill_out_sign_in_form(user)
+        click_button 'Sign in'
+        cookies[:remember_token] = user.remember_token
+      end
+      
     end
   end
 end

@@ -16,7 +16,7 @@ module Utilities
     RSpec::Matchers.define :have_page_link do |*args|
       opts = args.extract_options!
       match do |page|
-        page.should have_selector('a', opts)
+        page.should have_selector("a[href='#{opts[:href]}']", text: opts[:text])
       end
     end
     
