@@ -10,6 +10,30 @@ describe "Authentication" do
     it { should have_page_title('Sign in') }
   end
   
+  describe 'page links' do
+    describe 'as signed-in user' do
+      let(:user) { FactoryGirl.create(:user) }
+      before { sign_in user }
+      
+      it { should have_page_link(text: 'Users', href: users_path) }
+      it { should have_page_link(text: "Profile", href: user_path(user)) }
+      it { should have_page_link(text: "Settings", href: edit_user_path(user)) }
+      it { should have_page_link(text: "Sign out", href: signout_path) }
+      it { should_not have_page_link(text: 'Sign in', href: signin_path) }
+    end
+    
+    describe 'as a non-signed-in user' do
+      let(:user) { FactoryGirl.create(:user) }
+      before { visit root_path }
+      
+      it { should_not have_page_link(text: 'Users', href: users_path) }
+      it { should_not have_page_link(text: "Profile", href: user_path(user)) }
+      it { should_not have_page_link(text: "Settings", href: edit_user_path(user)) }
+      it { should_not have_page_link(text: "Sign out", href: signout_path) }
+      it { should have_page_link(text: 'Sign in', href: signin_path) }
+    end
+  end
+  
   describe "signin" do
     before { visit signin_path }
     
@@ -31,11 +55,6 @@ describe "Authentication" do
       before { sign_in user }
       
       it { should have_page_title(user.name) }
-      it { should have_page_link(text: 'Users', href: users_path) }
-      it { should have_page_link(text: "Profile", href: user_path(user)) }
-      it { should have_page_link(text: "Settings", href: edit_user_path(user)) }
-      it { should have_page_link(text: "Sign out", href: signout_path) }
-      it { should_not have_page_link(text: 'Sign in', href: signin_path) }
       
       describe "followed by signout" do
         before { click_link("Sign out") }
@@ -65,6 +84,18 @@ describe "Authentication" do
         describe 'after signing in' do
           it "should render the desired protected page" do
             page.should have_page_title(full_title('Edit user'))
+          end
+          
+          describe 'when signing in again' do
+            before do
+              visit signin_path
+              fill_out_sign_in_form(user)
+              click_button 'Sign in'
+            end
+            
+            it 'should render the default (profile) page' do
+              page.should have_page_title(user.name)
+            end
           end
         end
       end

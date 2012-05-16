@@ -3,6 +3,16 @@ require 'spec_helper'
 describe "User pages" do
   subject { page }
   
+  shared_examples_for 'a page that redirects signed in users' do
+    let(:user) { FactoryGirl.create(:user) }
+    before do
+      sign_in user
+      test_action
+    end
+    
+    specify { response.should redirect_to(root_path) }
+  end
+  
   describe 'index' do
     let(:user) { FactoryGirl.create(:user) }
     
@@ -17,8 +27,33 @@ describe "User pages" do
       before(:all) { 30.times { FactoryGirl.create(:user) } }
       after(:all) { User.delete_all }
       
+      let(:first_page) { User.order('name ASC').paginate(page: 1) }
+      let(:second_page) { User.order('name ASC').paginate(page: 2) }
+      
       it { should have_link('Next') }
       its(:html) { should match('>2</a>') }
+      
+      it "should list the first page of users" do
+        first_page.each do |user|
+          page.should have_selector('li', text: user.name)
+        end
+      end
+
+      it "should not list the second page of users" do
+        second_page.each do |user|
+          page.should_not have_selector('li', text: user.name)
+        end
+      end
+
+      describe "showing the second page" do
+        before { visit users_path(page: 2) }
+
+        it "should list the second page of users" do
+          second_page.each do |user|
+            page.should have_selector('li', text: user.name)
+          end
+        end
+      end
       
       it "should list each user" do
         User.all[0..2].each do |user|
@@ -47,22 +82,32 @@ describe "User pages" do
         it { should_not have_link('delete', href: user_path(admin)) }
       end
     end
-  end
+  end # end of 'index'
   
   describe "signup page" do
     before { visit signup_path}
     
     it { should have_main_heading('Sign up') }
     it { should have_page_title(full_title('Sign up')) }
-  end
+    
+    it_should_behave_like 'a page that redirects signed in users' do
+      let(:test_action) { get signup_path }
+    end
+    
+    describe 'create' do
+      it_should_behave_like 'a page that redirects signed in users' do
+        let(:test_action) { post users_path }
+      end
+    end
+  end # end of 'signup'
   
-  describe "profile page" do
+  describe "show page" do
     let(:user) { FactoryGirl.create(:user) }
     before { visit user_path(user) }
     
     it { should have_main_heading(user.name) }
     it { should have_page_title(user.name) }
-  end
+  end # end of 'show'
   
   describe "signup" do
     before { visit signup_path }
@@ -92,7 +137,7 @@ describe "User pages" do
         it { should have_link('Sign out') }
       end
     end
-  end
+  end # end of 'signup'
   
   describe "edit" do
     let(:user) { FactoryGirl.create(:user) }
@@ -129,6 +174,18 @@ describe "User pages" do
       it { should have_page_link(title: "Sign out", href: signout_path) }
       specify { user.reload.name.should == new_name }
       specify { user.reload.email.should == new_email }
+    end
+  end # end of 'edit'
+  
+  describe 'UsersController#destroy' do
+    describe 'as an admin' do
+      let(:admin) { FactoryGirl.create(:admin) }
+      before do
+        sign_in admin
+        delete user_path(admin)
+      end
+      
+      specify { response.should redirect_to(user_path(admin)) }
     end
   end
 end

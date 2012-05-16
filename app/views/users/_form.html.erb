@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="span6 offset3">
+    <%= simple_form_for(@user) do |f| %>
+      <%= render 'shared/error_messages' %>
+      <%= yield f %>
+    <% end %>
+    
+    <%- unless @user.new_record? -%>
+      <%= gravatar_for @user %>
+      <a href="http://gravatar.com/emails" target='_blank'>change</a>
+    <%- end -%>
+  </div>
+</div>
